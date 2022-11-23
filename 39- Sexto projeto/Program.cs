@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
-namespace _34__Quinto_projeto
+namespace _39__Sexto_projeto
 {
     internal class Program
     {
+        static string delimitadorInicio;
+        static string delimitadorFim;
+        static string tagNome;
+        static string tagDataNascimento;
+        static string tagNomeDaRua;
+        static string tagNumeroDaCasa;
+
         public struct DadosCadastraisStruct
         {
             public string Nome;
@@ -80,7 +88,6 @@ namespace _34__Quinto_projeto
             return retorno;
         }
 
-
         public static Resultado_e PegaUInt32(ref UInt32 numeroUInt32, string mensagem)
         {
             Resultado_e retorno;
@@ -130,11 +137,32 @@ namespace _34__Quinto_projeto
 
         }
 
+        public static void GravaDados(string caminho, List <DadosCadastraisStruct> listaDeUsuarios)
+        {
+            try
+            {
+                string conteudoArquivo = "";
+                foreach (DadosCadastraisStruct cadastro in listaDeUsuarios)
+                {
+                    conteudoArquivo += delimitadorInicio + "\r\n";
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"EXCECAO: {e.Message}");
+            }
+        }
 
         static void Main(string[] args)
         {
             List<DadosCadastraisStruct> ListaDeUsuarios = new List<DadosCadastraisStruct>();
             string opcao = "";
+            delimitadorInicio = "##### INICIO #####";
+            delimitadorFim = "##### FIM #####";
+            tagNome = "NOME: ";
+            tagDataNascimento = "DATA_DE_NASCIMENTO: ";
+            tagNomeDaRua = "NOME_DA_RUA: ";
+            tagNumeroDaCasa = "NUMERO_DA_CASA: ";
             do
             {
                 Console.WriteLine("Digite C para cadastrar um nome usuário ou S para sair:");
@@ -155,7 +183,6 @@ namespace _34__Quinto_projeto
                     MostraMensagem("Opção desconhecida");
                 }
             } while (opcao != "s");
-
         }
     }
 }
