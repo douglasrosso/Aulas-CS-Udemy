@@ -12,7 +12,7 @@ namespace _39__Sexto_projeto
         static string delimitadorInicio;
         static string delimitadorFim;
         static string tagNome;
-        static string tagDataNascimento;
+        static string tagDataDeNascimento;
         static string tagNomeDaRua;
         static string tagNumeroDaCasa;
 
@@ -118,26 +118,27 @@ namespace _39__Sexto_projeto
             return retorno;
         }
 
-        public static void CadastraUsuario(ref List<DadosCadastraisStruct> listaDeUsuarios)
+        public static Resultado_e CadastraUsuario(ref List<DadosCadastraisStruct> listaDeUsuarios)
         {
             DadosCadastraisStruct cadastroUsuario;
             cadastroUsuario.Nome = "";
             cadastroUsuario.DataDeNascimento = new DateTime();
             cadastroUsuario.NomeDaRua = "";
             cadastroUsuario.NumeroDaCasa = 0;
-            if (PegaString(ref cadastroUsuario.Nome, "Digite o nome completo ou digite S para sair") != Resultado_e.Sucesso)
-                return;
-            if (PegaData(ref cadastroUsuario.DataDeNascimento, "Digite a data de nascimento no formato DD/MM/AAAA ou digite S para sair") != Resultado_e.Sucesso)
-                return;
-            if (PegaString(ref cadastroUsuario.NomeDaRua, "Digite o nome da rua ou digite S para sair") != Resultado_e.Sucesso)
-                return;
-            if (PegaUInt32(ref cadastroUsuario.NumeroDaCasa, "Digite o numero da casa ou digite S para sair") != Resultado_e.Sucesso)
-                return;
+            if (PegaString(ref cadastroUsuario.Nome, "Digite o nome completo ou digite S para sair") == Resultado_e.Sair)
+                return Resultado_e.Sair;
+            if (PegaData(ref cadastroUsuario.DataDeNascimento, "Digite a data de nascimento no formato DD/MM/AAAA ou digite S para sair") == Resultado_e.Sair)
+                return Resultado_e.Sair;
+            if (PegaString(ref cadastroUsuario.NomeDaRua, "Digite o nome da rua ou digite S para sair") == Resultado_e.Sair)
+                return Resultado_e.Sair;
+            if (PegaUInt32(ref cadastroUsuario.NumeroDaCasa, "Digite o numero da casa ou digite S para sair") == Resultado_e.Sair)
+                return Resultado_e.Sair;
             listaDeUsuarios.Add(cadastroUsuario);
+            return Resultado_e.Sucesso;
 
         }
 
-        public static void GravaDados(string caminho, List <DadosCadastraisStruct> listaDeUsuarios)
+        public static void GravaDados(string caminho, List<DadosCadastraisStruct> listaDeUsuarios)
         {
             try
             {
@@ -145,11 +146,53 @@ namespace _39__Sexto_projeto
                 foreach (DadosCadastraisStruct cadastro in listaDeUsuarios)
                 {
                     conteudoArquivo += delimitadorInicio + "\r\n";
+                    conteudoArquivo += tagNome + cadastro.Nome + "\r\n";
+                    conteudoArquivo += tagDataDeNascimento + cadastro.DataDeNascimento.ToString("dd/MM/yyyy") + "\r\n";
+                    conteudoArquivo += tagNomeDaRua + cadastro.NomeDaRua + "\r\n";
+                    conteudoArquivo += tagNumeroDaCasa + cadastro.NumeroDaCasa + "\r\n";
+                    conteudoArquivo += delimitadorFim + "\r\n";
                 }
+                File.WriteAllText(caminho, conteudoArquivo);
             }
             catch (Exception e)
             {
                 Console.WriteLine($"EXCECAO: {e.Message}");
+            }
+        }
+
+        public static void CarregaDados(string caminho, ref List<DadosCadastraisStruct> ListaDeUsuarios)
+        {
+            try
+            {
+                if (File.Exists(caminho))
+                {
+                    string[] conteudoArquivo = File.ReadAllLines(caminho); // ReadAllLines retorna u marray de strings,
+                    DadosCadastraisStruct dadosCadastrais; // cada indice desse array,
+                    dadosCadastrais.Nome = ""; // será uma das linhas do arquivo
+                    dadosCadastrais.DataDeNascimento = new DateTime();
+                    dadosCadastrais.NomeDaRua = "";
+                    dadosCadastrais.NumeroDaCasa = 0;
+
+                    foreach (string linha in conteudoArquivo)
+                    {
+                        if (linha.Contains(delimitadorInicio))
+                            continue; // Continue serve para finalizar a iteração atual e ir pra próxima
+                        if (linha.Contains(delimitadorFim))
+                            ListaDeUsuarios.Add(dadosCadastrais);
+                        if (linha.Contains(tagNome))
+                            dadosCadastrais.Nome = linha.Replace(tagNome, "");
+                        if (linha.Contains(tagDataDeNascimento)) 
+                            dadosCadastrais.DataDeNascimento = Convert.ToDateTime(linha.Replace(tagDataDeNascimento, ""));
+                        if (linha.Contains(tagNomeDaRua))
+                            dadosCadastrais.NomeDaRua = linha.Replace(tagNomeDaRua, "");
+                        if (linha.Contains(tagNumeroDaCasa))
+                            dadosCadastrais.NumeroDaCasa = Convert.ToUInt32(linha.Replace(tagNumeroDaCasa, ""));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"EXCESSAO: {e.Message}");
             }
         }
 
@@ -160,9 +203,13 @@ namespace _39__Sexto_projeto
             delimitadorInicio = "##### INICIO #####";
             delimitadorFim = "##### FIM #####";
             tagNome = "NOME: ";
-            tagDataNascimento = "DATA_DE_NASCIMENTO: ";
+            tagDataDeNascimento = "DATA_DE_NASCIMENTO: ";
             tagNomeDaRua = "NOME_DA_RUA: ";
             tagNumeroDaCasa = "NUMERO_DA_CASA: ";
+            string caminhoArquivo = @"baseDeDados.txt"; // Se o arquivo existir ele vai carregar os dados
+
+            CarregaDados(caminhoArquivo, ref ListaDeUsuarios); // Carregar Dados
+
             do
             {
                 Console.WriteLine("Digite C para cadastrar um nome usuário ou S para sair:");
@@ -170,7 +217,8 @@ namespace _39__Sexto_projeto
                 if (opcao == "c")
                 {
                     // Cadastrar um novo usuário
-                    CadastraUsuario(ref ListaDeUsuarios);
+                    if (CadastraUsuario(ref ListaDeUsuarios) == Resultado_e.Sucesso)
+                        GravaDados(caminhoArquivo, ListaDeUsuarios);
                 }
                 else if (opcao == "s")
                 {
