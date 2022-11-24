@@ -121,7 +121,7 @@ namespace _41__Sétimo_projeto
             return retorno;
         }
 
-        public static Resultado_e CadastraUsuario(ref List<DadosCadastraisStruct> listaDeUsuarios)
+        public static Resultado_e CadastraUsuario(ref List<DadosCadastraisStruct> ListaDeUsuarios)
         {
             DadosCadastraisStruct cadastroUsuario;
             cadastroUsuario.Nome = "";
@@ -139,18 +139,18 @@ namespace _41__Sétimo_projeto
                 return Resultado_e.Sair;
             if (PegaUInt32(ref cadastroUsuario.NumeroDaCasa, "Digite o numero da casa ou digite S para sair") == Resultado_e.Sair)
                 return Resultado_e.Sair;
-            listaDeUsuarios.Add(cadastroUsuario);
+            ListaDeUsuarios.Add(cadastroUsuario);
             GravaDados(caminhoArquivo, ListaDeUsuarios);
             return Resultado_e.Sucesso;
 
         }
 
-        public static void GravaDados(string caminho, List<DadosCadastraisStruct> listaDeUsuarios)
+        public static void GravaDados(string caminho, List<DadosCadastraisStruct> ListaDeUsuarios)
         {
             try
             {
                 string conteudoArquivo = "";
-                foreach (DadosCadastraisStruct cadastro in listaDeUsuarios)
+                foreach (DadosCadastraisStruct cadastro in ListaDeUsuarios)
                 {
                     conteudoArquivo += delimitadorInicio + "\r\n";
                     conteudoArquivo += tagNome + cadastro.Nome + "\r\n";
@@ -207,6 +207,64 @@ namespace _41__Sétimo_projeto
             }
         }
 
+        public static void BuscaUsuarioPeloDoc(List<DadosCadastraisStruct> ListaDeuUsuarios)
+        {
+            Console.WriteLine("Digite o número do documento para buscar o usuário ou digite S para sair");
+            string temp = Console.ReadLine();
+            if (temp.ToLower() == "s")
+                return;
+            else
+            {
+                List<DadosCadastraisStruct> ListaDeuUsuariosTemp = ListaDeuUsuarios.Where/* Procura e compara o número de documento do banco e o que foi digitado */(x => x.NumeroDoDocumento == temp).ToList();
+                if (ListaDeuUsuariosTemp.Count > 0)
+                {
+                    foreach (DadosCadastraisStruct usuario in ListaDeuUsuariosTemp)
+                    {
+                        Console.WriteLine(tagNome + usuario.Nome);
+                        Console.WriteLine(tagDataDeNascimento + usuario.DataDeNascimento.ToString("dd/MM/yyyy"));
+                        Console.WriteLine(tagNumeroDoDocumento + usuario.NumeroDoDocumento);
+                        Console.WriteLine(tagNomeDaRua + usuario.NomeDaRua);
+                        Console.WriteLine(tagNumeroDaCasa + usuario.NumeroDaCasa);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Nunhum usuário possui o documento {temp}");
+                }
+                //
+                MostraMensagem("");
+            }
+        }
+
+        public static void ExcluiUsuarioPeloDoc(ref List<DadosCadastraisStruct> ListaDeUsuarios)
+        {
+            Console.WriteLine("Digite o número do documento para excluir o usuário ou digite S para sair");
+            string temp = Console.ReadLine();
+            bool algurmFoiExcluido = false;
+            if (temp.ToLower() == "s")
+                return;
+            else
+            {
+                List<DadosCadastraisStruct> ListaDeUsuariosTemp = ListaDeUsuarios.Where(x => x.NumeroDoDocumento == temp).ToList();
+                if (ListaDeUsuariosTemp.Count>0)
+                {
+                    foreach (DadosCadastraisStruct usuario in ListaDeUsuariosTemp)
+                    {
+                        ListaDeUsuarios.Remove(usuario);
+                        algurmFoiExcluido = true;
+                    }
+                    if (algurmFoiExcluido)
+                        GravaDados(caminhoArquivo, ListaDeUsuarios);
+                    Console.WriteLine($"{ListaDeUsuariosTemp.Count} usuário(s) com documento {temp} excluido(s)");
+                }
+                else
+                {
+                    Console.WriteLine($"Nunhum usuário possui o documento {temp}");
+                }
+                MostraMensagem("");
+            }
+        }
+
         static void Main(string[] args)
         {
             List<DadosCadastraisStruct> ListaDeUsuarios = new List<DadosCadastraisStruct>();
@@ -233,15 +291,17 @@ namespace _41__Sétimo_projeto
                 {
                     // Cadastrar um novo usuário
                     CadastraUsuario(ref ListaDeUsuarios);
-                        
+
                 }
                 else if (opcao == "b")
                 {
-                    // Buscar usuário
+                    // Buscar usuário\
+                    BuscaUsuarioPeloDoc(ListaDeUsuarios);
                 }
                 else if (opcao == "e")
                 {
                     // Excluir usuário
+                    ExcluiUsuarioPeloDoc(ref ListaDeUsuarios);
                 }
                 else if (opcao == "s")
                 {
