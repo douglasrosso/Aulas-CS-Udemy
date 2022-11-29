@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aulas CS Udemy", "Aulas CS Udemy.csproj", "{B0F50C57-FE4F-4430-BAC1-340B49FAB5FC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "46- Modificador STATIC e palavra THIS", "46- Modificador STATIC e palavra THIS.csproj", "{27AB7F85-EA34-42BF-9477-6BC81F2C170D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B0F50C57-FE4F-4430-BAC1-340B49FAB5FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0F50C57-FE4F-4430-BAC1-340B49FAB5FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B0F50C57-FE4F-4430-BAC1-340B49FAB5FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B0F50C57-FE4F-4430-BAC1-340B49FAB5FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27AB7F85-EA34-42BF-9477-6BC81F2C170D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27AB7F85-EA34-42BF-9477-6BC81F2C170D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27AB7F85-EA34-42BF-9477-6BC81F2C170D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27AB7F85-EA34-42BF-9477-6BC81F2C170D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {F4074D4F-7D0A-4331-95A4-C2ABD40266A1}
+		SolutionGuid = {B69447D8-F2F5-476F-A09A-E2997F9B0287}
 	EndGlobalSection
 EndGlobal

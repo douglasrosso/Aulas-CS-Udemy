@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3407D8BD-E065-4174-802F-A6FFF2739201}</ProjectGuid>
+    <ProjectGuid>{27AB7F85-EA34-42BF-9477-6BC81F2C170D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>_43__Criando_classes</RootNamespace>
-    <AssemblyName>43- Criando classes</AssemblyName>
+    <RootNamespace>_46__Modificador_STATIC_e_palavra_THIS</RootNamespace>
+    <AssemblyName>46- Modificador STATIC e palavra THIS</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CarroExterno.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
