@@ -1,0 +1,13 @@
+﻿<Window x:Class="_114._Projeto_tela_de_login.MeuPrograma"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_114._Projeto_tela_de_login"
+        mc:Ignorable="d"
+        Title="MeuPrograma" Height="450" Width="800">
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="253" Margin="128,84,0,0" VerticalAlignment="Top" Width="435" Source="/Tom Clancy's Rainbow Six® Siege2022-12-11-16-1-22.jpg"/>
+
+    </Grid>
+</Window>

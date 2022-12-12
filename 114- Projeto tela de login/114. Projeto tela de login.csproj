@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <RootNamespace>_114._Projeto_tela_de_login</RootNamespace>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Tom Clancy%27s Rainbow Six® Siege2022-12-11-16-1-22.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Tom Clancy's Rainbow Six® Siege2022-12-11-16-1-22.jpg" />
+  </ItemGroup>
+
+</Project>
